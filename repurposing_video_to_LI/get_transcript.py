@@ -27,17 +27,7 @@ def get_transcript_from_yt():
     print("Transcript saved to transcript.json")
 
 
-def load_transcript():
-    # Load the transcript from the JSON file
-    with open("transcript.json", "r", encoding = 'utf-8') as json_file:
-        raw = json.load(json_file)
-    transcript = json.loads(raw)
-    text_only = ""
-    for snippet in transcript:
-        text_only += snippet['text'] + " "
-    
-    
-    print(len(text_only))
+
 
 if __name__ == "__main__":
     load_transcript()
