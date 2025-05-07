@@ -2,6 +2,8 @@ import pandas as pd
 from pydantic import BaseModel, Field
 from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai.providers.openai import OpenAIProvider
+from pydantic_ai.models.gemini import GeminiModel
+from pydantic_ai.providers.google_gla import GoogleGLAProvider
 from pydantic_ai import Agent
 import asyncio
 from dotenv import load_dotenv
@@ -9,8 +11,9 @@ import os
 
 load_dotenv()
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-openai_model = OpenAIModel('gpt-4o-mini', provider=OpenAIProvider(api_key=OPENAI_API_KEY))
+
+openai_model = OpenAIModel('gpt-4o-mini', provider=OpenAIProvider(api_key=os.getenv("OPENAI_API_KEY")))
+model = GeminiModel('gemini-2.0-flash', provider=GoogleGLAProvider(api_key=os.getenv("GEMINI_API_KEY")))
 
 class LLMResponse(BaseModel):
     response: str = Field(description='final response')
@@ -20,7 +23,7 @@ class LLMBrand(BaseModel):
 
 
 def load():
-    return pd.read_csv("/mnt/c/Users/saidl/Downloads/drfsearch.csv")
+    return pd.read_csv("/mnt/c/Users/saidl/Downloads/LLM_Brand_Test_Questions.csv")
 
 async def process_row(text, model):
 
