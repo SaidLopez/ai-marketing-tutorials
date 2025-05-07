@@ -13,7 +13,7 @@ load_dotenv()
 
 
 openai_model = OpenAIModel('gpt-4o-mini', provider=OpenAIProvider(api_key=os.getenv("OPENAI_API_KEY")))
-model = GeminiModel('gemini-2.0-flash', provider=GoogleGLAProvider(api_key=os.getenv("GEMINI_API_KEY")))
+gemini_model = GeminiModel('gemini-2.0-flash', provider=GoogleGLAProvider(api_key=os.getenv("GEMINI_API_KEY")))
 
 class LLMResponse(BaseModel):
     response: str = Field(description='final response')
@@ -45,26 +45,32 @@ async def process_row(text, model):
 
 async def main():
     df = load() # Assume load() returns your DataFrame  
-    df_sample = df.sample(10, random_state=42).copy()
+    df_sample = df.sample(2000, random_state=42).copy()
     # 1. Create the list of coroutines  
-    tasks = [process_row(text, openai_model) for text in df['Question']]  
+    tasks_openai = [process_row(text, openai_model) for text in df_sample['Question']]  
+    tasks_gemini = [process_row(text, openai_model) for text in df_sample['Question']]  
 
     # 2. Run them concurrently and gather results  
     # results will be like: [(bm1, r1), (bm2, r2), (bm3, r3), (bm4, r4), (bm5, r5)]  
     print("Starting async processing...")  
-    results = await asyncio.gather(*tasks)  
+    results_openai  = await asyncio.gather(*tasks_openai)  
+    results_gemini  = await asyncio.gather(*tasks_gemini)  
     print("Async processing finished.")  
 
     # 3. Unzip the list of tuples into two separate lists/tuples  
     # zip(*results) effectively transposes the list of tuples  
     # map(list, ...) converts the resulting tuples from zip into lists  
-    brand_mentions_list, responses_list = map(list, zip(*results))  
+    brand_mentions_list_openai, responses_list_openai = map(list, zip(*results_openai))  
+    brand_mentions_list_gemini, responses_list_gemini = map(list, zip(*results_gemini))  
 
     # 4. Assign the separated lists to the DataFrame columns  
-    df['brand_mentions_gpt4o'] = brand_mentions_list  
-    df['response_gpt4o'] = responses_list  
+    df_sample['brand_mentions_gpt4o'] = brand_mentions_list_openai
+    df_sample['brand_mentions_gemini'] = brand_mentions_list_gemini
+    df_sample['response_gpt4o'] = responses_list_openai
+    df_sample['response_gemini'] = responses_list_gemini  
+    
 
-    df.to_csv("/mnt/c/Users/saidl/Downloads/responses.csv", index=False)
+    df_sample.to_csv("/mnt/c/Users/saidl/Downloads/responses.csv", index=False)
 
     return 'Done'
 
