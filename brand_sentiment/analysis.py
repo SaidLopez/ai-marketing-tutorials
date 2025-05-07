@@ -22,7 +22,7 @@ We want to use this information to improve the product and improve our marketing
 
 def analyse_negative_responses(messages):
     # Example of a chat with a model
-    response: ChatResponse = chat(model='gemma3:latest', messages=[
+    response: ChatResponse = chat(model='llama3.1:8b', messages=[
         {
             'role': 'system',
             'content': SYSTEM_PROMPT_1,
@@ -38,7 +38,7 @@ def analyse_negative_responses(messages):
 
 def analyse_positive_responses(messages):
     # Example of a chat with a model
-    response: ChatResponse = chat(model='gemma3:latest', messages=[
+    response: ChatResponse = chat(model='llama3.1:8b', messages=[
         {
             'role': 'system',
             'content': SYSTEM_PROMPT_2,
@@ -54,7 +54,7 @@ def analyse_positive_responses(messages):
 
 def analyse_all(messages):
     # Example of a chat with a model
-    response: ChatResponse = chat(model='gemma3:latest', messages=[
+    response: ChatResponse = chat(model='llama3.1:8b', messages=[
         {
             'role': 'system',
             'content': SYSTEM_PROMPT_3,
@@ -83,11 +83,21 @@ if __name__ == "__main__":
         pros_messages.append(item['pros'])
 
     # Analyse the messages
+    print("Analysing negative responses...")
     negative_report = analyse_negative_responses(cons_messages)
+    print("Analysing positive responses...")
     positive_report = analyse_positive_responses(pros_messages)
+    print("Analysing all responses...")
     analyse_all_report = analyse_all(data)
 
     # Print the reports
-    print(negative_report)
-    print(positive_report)
-    print(analyse_all_report)
+    with open('reports/negative_report.txt', 'w') as f:
+        f.write(negative_report)
+        f.close()
+    with open('reports/positive_report.txt', 'w') as f:
+        f.write(positive_report)
+        f.close()
+    with open('reports/analysis_report.txt', 'w') as f:
+        f.write(analyse_all_report)
+        f.close()
+    
