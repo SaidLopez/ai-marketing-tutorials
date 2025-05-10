@@ -3,8 +3,6 @@ from youtube_transcript_api.formatters import JSONFormatter
 import json
 
 
-
-
 def get_transcript_from_yt():
     # For reference only, this is a podcast
     full_url = "https://www.youtube.com/watch?v=D67eWcX2XYQ&ab_channel=TheDiaryOfACEO"
@@ -25,8 +23,6 @@ def get_transcript_from_yt():
     with open("transcript.json", "w", encoding = 'utf-8') as json_file:
         json.dump(json_formatted, json_file, ensure_ascii=False, indent=4)
     print("Transcript saved to transcript.json")
-
-
 
 
 if __name__ == "__main__":
