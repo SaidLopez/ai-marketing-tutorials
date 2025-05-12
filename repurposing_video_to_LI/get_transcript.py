@@ -26,4 +26,4 @@ def get_transcript_from_yt():
 
 
 if __name__ == "__main__":
-    load_transcript()
+    get_transcript_from_yt()

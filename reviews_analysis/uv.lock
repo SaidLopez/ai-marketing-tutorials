@@ -1,5 +1,4 @@
 version = 1
-revision = 1
 requires-python = ">=3.12"
 
 [[package]]
@@ -136,21 +135,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/d8/e4/0c4c39e18fd76d6a628d4dd8da40543d136ce2d1752bd6eeeab0791f4d6b/beautifulsoup4-4.13.4.tar.gz", hash = "sha256:dbb3c4e1ceae6aefebdaf2423247260cd062430a410e38c66f2baa50a8437195", size = 621067 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/50/cd/30110dc0ffcf3b131156077b90e9f60ed75711223f306da4db08eff8403b/beautifulsoup4-4.13.4-py3-none-any.whl", hash = "sha256:9bbbb14bfde9d79f38b8cd5f8c7c85f4b8f2523190ebed90e950a8dea4cb1c4b", size = 187285 },
-]
-
-[[package]]
-name = "brand-sentiment"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "crawl4ai" },
-    { name = "ollama" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "crawl4ai", specifier = ">=0.6.2" },
-    { name = "ollama", specifier = ">=0.4.8" },
 ]
 
 [[package]]
@@ -1304,6 +1288,21 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/63/70/2bf7780ad2d390a8d301ad0b550f1581eadbd9a20f896afe06353c2a2913/requests-2.32.3.tar.gz", hash = "sha256:55365417734eb18255590a9ff9eb97e9e1da868d4ccd6402399eaf68af20a760", size = 131218 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f9/9b/335f9764261e915ed497fcdeb11df5dfd6f7bf257d4a6a2a686d80da4d54/requests-2.32.3-py3-none-any.whl", hash = "sha256:70761cfe03c773ceb22aa2f671b4757976145175cdfca038c02654d061d6dcc6", size = 64928 },
+]
+
+[[package]]
+name = "reviews-analysis"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "crawl4ai" },
+    { name = "ollama" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "crawl4ai", specifier = ">=0.6.2" },
+    { name = "ollama", specifier = ">=0.4.8" },
 ]
 
 [[package]]
